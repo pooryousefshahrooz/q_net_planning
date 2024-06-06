@@ -1,0 +1,4 @@
+Link_index	Source	Destination	Capacity(EPRps)	Length
+0	0	1	0.4	100
+1	1	2	0.5	100
+2	2	3	0.4	100
