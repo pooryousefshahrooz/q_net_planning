@@ -27,6 +27,7 @@ FLAGS = flags.FLAGS
 utility_default_value = -200
 config = get_config(FLAGS) or FLAGS
 network = Network()
+""" in below we set the network object parameters from config.py file"""
 solver = Solver()
 if config.include_fidelity_in_utility:
     network.include_fidelity_in_utility = True
@@ -56,7 +57,6 @@ else:
 
 for round_number in range(config.repeating_times):
     for number_of_nodes_in_random in graphs_with_nodes:
-        print("round ",round_number)
         for edge_F in config.edge_F_values:
             network.edge_F = edge_F# we assume all links have this fidelity
             for q_value in config.q_values:
@@ -251,7 +251,7 @@ for round_number in range(config.repeating_times):
                                                             config.end_node_decoherence_incresing_step = config.end_node_max_decoherence
                                                         for end_node_decoherence in range(config.end_node_min_decoherence,config.end_node_max_decoherence,config.end_node_decoherence_incresing_step):
                                                             if not network.checking_end_node_memory_decoherence_flag:
-                                                                network.end_node_memory_decoherence_time = 10000000000
+                                                                network.end_node_memory_decoherence_time = 10000000000 # a big number
                                                             else:
                                                                 network.end_node_memory_decoherence_time = end_node_decoherence
 
@@ -259,7 +259,7 @@ for round_number in range(config.repeating_times):
                                                                 config.repeater_decoherence_incresing_step = config.repeater_max_decoherence
                                                             for repeater_memory_decoherence_time in range(config.repeater_min_decoherence,config.repeater_max_decoherence,config.repeater_decoherence_incresing_step):
                                                                 if not network.checking_repeater_memory_decoherence_flag:
-                                                                    network.repeater_memory_decoherence_time = 100000000
+                                                                    network.repeater_memory_decoherence_time = 100000000# a big number
                                                                 else:
                                                                     network.repeater_memory_decoherence_time= repeater_memory_decoherence_time
 

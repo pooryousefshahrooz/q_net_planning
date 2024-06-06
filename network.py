@@ -129,12 +129,14 @@ class Network:
                     points.append(pp)
         return points    
     def check_a_valid_path(self,path_edges):
+        """ checking if a path is not using any forbidden edges"""
         e2e_F = self.compute_e2e_fidleity(path_edges)
         for edge in path_edges:
             if edge in self.forbidden_edges:
                 return False
         return True
     def compute_paths_between_pairs(self):
+        """computes the shortest number_of_paths paths between user pairs"""
         path_counter = 0
         for pair in self.user_pairs:
             start_time = time.time()
@@ -166,7 +168,7 @@ class Network:
 
     
     def compute_e2e_fidleity(self,path_edges):
-       
+        """computing the end to end fidelity of a path"""
         if path_edges:
             F_product = (4*self.edge_F-1)/3 
             for edge in path_edges[1:]:
@@ -183,7 +185,7 @@ class Network:
     
 
     def f(self,W,P,Q,i,k):
-       
+        """computing the QCAST recursive function in Shi, Shouqian, and Chen Qian SIGCOM202 paper"""
         if k==1:
             return Q[i][k]
         else:
@@ -196,6 +198,7 @@ class Network:
             return self.f(W,P,Q,i,k-1)* sum_Q+Q[i][k]* sum_P
 
     def compute_e2e_rate(self,path_id,path,W):
+        """using QCAST or approximate function to compute end to end rate on a path"""
         if (self.relaxing_QCAST_formulation or W>=100):
             p_values = []
             for edge in path:
