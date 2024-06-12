@@ -9,7 +9,9 @@ Published: August 2023
 Abstract: Existing classical optical network infrastructure cannot be immediately used for quantum network applications due to photon loss. The first step towards enabling quantum networks is the integration of quantum repeaters into optical networks. However, the expenses and intrinsic noise inherent in quantum hardware underscore the need for an efficient deployment strategy that optimizes the allocation of quantum repeaters and memories. In this paper, we present a comprehensive framework for network planning, aiming to efficiently distributing quantum repeaters across existing infrastructure, with the objective of maximizing quantum network utility within an entanglement distribution network. We apply our framework to several cases including a preliminary illustration of a dumbbell network topology and real-world cases of the SURFnet and ESnet. We explore the effect of quantum memory multiplexing within quantum repeaters, as well as the influence of memory coherence time on quantum network utility. We further examine the effects of different fairness assumptions on network planning, uncovering their impacts on real-time network performance.
 
 
-![alt text](data/esnet.pdf "Repeater placement on ESnet topology")
+![alt text1][logo]
+
+[logo]: data/esnet.pdf "Repeater placement on ESnet topology"
 
 # Requirements:
 To run the code in this repository, you need to have the following libraries installed on your machine:
