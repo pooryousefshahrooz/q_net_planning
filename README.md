@@ -47,39 +47,39 @@ We report some or all of the following metrics in our experiments. Each invocati
 Here we show how to run the repeater placement on a link for a dumbbell topology. We have shown the most important hyperparameters in the config.py file here to run this experiment:
 
 * general hyperparameters
-  ## repeating_times = 1 # repeatting the experiment 
-  ## include_fidelity_in_utility = True 
-  ## q_values = [0.5]# Different values of q (swap success probability) that we want to evaluate in the experiment
-  ## utility_type = "NGTV" # Nagativity utility fucntion
+  ```repeating_times = 1 # repeatting the experiment 
+  include_fidelity_in_utility = True 
+  q_values = [0.5]# Different values of q (swap success probability) that we want to evaluate in the experiment
+  utility_type = "NGTV" # Nagativity utility function```
 
   
 * solver setup
-  ## schemes = ["exhaustive"]#["link_based","exhaustive","linear_link_based"] # different ways of solving the optimization problem
-  ## link_based_solver = "CPLEX"#"exhaustive"#"Bonmin","Baron
-  ## relaxing_QCAST_formulation = True
+  ```schemes = ["exhaustive"]#["link_based","exhaustive","linear_link_based"] # different ways of solving the optimization problem
+  link_based_solver = "CPLEX"#"exhaustive"#"Bonmin","Baron
+  relaxing_QCAST_formulation = True```
     
     
 * network topology
-  ## network_topology = "Dumbbell"# Dumbbell,Random,"ESnet2.gml",Repeater_chain,SurfnetCore.gml,"Random
-  ## edge_F_values = [1.0]# set of values to experiment for link level fidelity. we assume all links have this fidelity
-  ## set_of_number_of_user_pairs = [3] # number of user pairs in the network
-  ## number_of_paths_values = [6000] # number of paths between each pair of user pairs
-  ## K_values = [1] # set of number of paths allowed to be used for each user pair. One means each user pair can use at most one path.
-  ## lengths_of_middle_link = [100] # in km for dumbell shape topology
+  ```network_topology = "Dumbbell"# Dumbbell,Random,"ESnet2.gml",Repeater_chain,SurfnetCore.gml,"Random
+  edge_F_values = [1.0]# set of values to experiment for link level fidelity. we assume all links have this fidelity
+  set_of_number_of_user_pairs = [3] # number of user pairs in the network
+  number_of_paths_values = [6000] # number of paths between each pair of user pairs
+  K_values = [1] # set of number of paths allowed to be used for each user pair. One means each user pair can use at most one path.
+  lengths_of_middle_link = [100] # in km for dumbell shape topology```
     
     
 * network planning assumptions experiment hyperparameters
-  ## dynamic_system_flag = False
+  ```dynamic_system_flag = False```
   
 
 
     
 * repeaters and end nodes hyperparameters
-  ## D_values= [10] # set of values for repeaters memory budget
-  ## checking_repeater_memory_life_time_flag = False # set to True of we want to restrict paths 
-  ## checking_end_node_memory_life_time_flag = False 
-  ## R_values = [10,4,6,8] # set of values for number of repetaers budget
-  ## end_user_memory_set = [10] # the memory budget of end nodes
+  ```D_values= [10] # set of values for repeaters memory budget
+  checking_repeater_memory_life_time_flag = False # set to True of we want to restrict paths 
+  checking_end_node_memory_life_time_flag = False 
+  R_values = [10,4,6,8] # set of values for number of repetaers budget
+  end_user_memory_set = [10] # the memory budget of end nodes```
   
 
 
