@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
 from __future__ import print_function
 
 import numpy as np
@@ -19,9 +16,6 @@ from config import get_config
 import time
 import os
 FLAGS = flags.FLAGS
-
-
-# In[ ]:
 
 
 utility_default_value = -200
@@ -100,9 +94,6 @@ for round_number in range(config.repeating_times):
 #                                             ("NETLPGH","PSFC"),
 #                                               ("NETLMGN","PPPL"),
 #                                               ("BNL","JLAB"),
-                                            
-                                            
-                                            
                                               ("SRS","ORAU"),
                                               ("Y12","FNAL"),
                                               ("ORNL","ANL")
@@ -112,10 +103,6 @@ for round_number in range(config.repeating_times):
                                             ("NETLPGH","PSFC"),
                                               ("NETLMGN","PPPL"),
                                              ("BNL","JLAB"),
-                                            
-                                            
-                                            
-                                            
 #                                               ("SRS","ORAU"),
 #                                               ("Y12","FNAL"),
 #                                               ("ORNL","ANL")
@@ -475,30 +462,6 @@ for round_number in range(config.repeating_times):
                                                                     )
                                                     except:
                                                         pass
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
 
 
 
