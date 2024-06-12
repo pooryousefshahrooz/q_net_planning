@@ -35,13 +35,6 @@ Make sure you have the IBM CPLEX academic edition installed, as the community ed
 
 For any questions or issues, please open an issue on the GitHub repository or contact the authors via email.
 
-# Interpreting the Results
-We report some or all of the following metrics in our experiments. Each invocation of the <experiment_name>.sh will log a summary of the results on the sender-side.
-
-* Throughput: Unidirectional (sender to receiver) aggregate throughput (in Gbps).
-* Utilisation: CPU utilisation (in percent (%)) on the sender-side and the receiver-side.
-* Cache Miss: Cache-miss rate (in percent (%)) on the sender-side and receiver-side.
-* CPU Utilisation Breakdown: Fraction of CPU cycles taken by various layers of the kernel TCP stack.
   
 # Running an Experiment (figure 2)
 Here we show how to run the repeater placement on a link for a dumbbell topology. We have shown the most important hyperparameters in the config.py file here to run this experiment:
@@ -69,6 +62,7 @@ Here we show how to run the repeater placement on a link for a dumbbell topology
     
     
 * network planning assumptions experiment hyperparameters
+  
   ```dynamic_system_flag = False```
   
 
@@ -81,8 +75,16 @@ Here we show how to run the repeater placement on a link for a dumbbell topology
   R_values = [10,4,6,8] # set of values for number of repetaers budget
   end_user_memory_set = [10] # the memory budget of end nodes```
   
+# Interpreting the Results
+We report some or all of the following metrics in our experiments. Check function ```save()``` in ```network.py``` script to see the key for each column of the results ```csv``` file.
 
+* maximum utility of the network
+* processing time in seconds
+* edges of each path used by each user pair in the optimal solution
+* end-to-end fidelity of each path
+* end-to-end rate on each path used by each user pair in the optimal solution
 
+  
 # Citing
 
 Please cite our paper if you're using any part of this code for your project.
