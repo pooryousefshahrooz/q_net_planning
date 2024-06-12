@@ -11,9 +11,9 @@ Abstract: Existing classical optical network infrastructure cannot be immediatel
 
 ![alt text1][logo]
 
-[logo]: data/esnet.pdf "Repeater placement on ESnet topology"
+[logo]: data/esnet.png "Repeater placement on ESnet topology"
 
-<img src="https://github.com/pooryousefshahrooz/q_net_planning/blob/main/data/esnet.pdf" align="center" height="350" width="600"/>
+<img src="https://github.com/pooryousefshahrooz/q_net_planning/blob/main/data/esnet.png" align="center" height="350" width="600"/>
 
 
 
