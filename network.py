@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[8]:
-
-
 import numpy as np
 import random
 import matplotlib.pyplot as plt
@@ -34,29 +31,7 @@ import matplotlib.pyplot as plt
 FLAGS = flags.FLAGS
 OBJ_EPSILON = 1e-12
 
-
-# In[32]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# # A class that includes the codes related to generating topologies, computing paths and selecting repeater node candidtes etc. 
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
+# # A class that includes the codes related to generating topologies, computing paths and selecting repeater node candidtes etc.
 
 class Network:
     def __init__(self):
@@ -111,52 +86,83 @@ class Network:
         self.weighted_sum_rate_objective = False
         self.include_log = True
         self.each_path_weight = {}
-        
-    def split(self,x, n):
-        points = []
 
-        if (x % n == 0):
-            for i in range(n):
-                points.append(x//n)
+    def split(self, x, n):
+        """
+        Splits the integer x into n parts as evenly as possible.
+        """
+        points = []  # Initialize an empty list to store the parts
+
+        if x % n == 0:  # Check if x is evenly divisible by n
+            for i in range(n):  # If yes, create n parts each of size x // n
+                points.append(x // n)
         else:
+            zp = n - (x % n)  # Calculate the number of parts that should be one less
+            pp = x // n  # Calculate the base size of each part
 
-            zp = n - (x % n)
-            pp = x//n
             for i in range(n):
-                if(i>= zp):
+                if i >= zp:  # For the remaining parts, add one more to the base size
                     points.append(pp + 1)
-                else:
+                else:  # For the initial zp parts, use the base size
                     points.append(pp)
-        return points    
-    def check_a_valid_path(self,path_edges):
-        """ checking if a path is not using any forbidden edges"""
+
+        return points  # Return the list of parts
+
+    def check_a_valid_path(self, path_edges):
+        """Checks if a path is not using any forbidden edges"""
+
+        # Compute the end-to-end fidelity of the path
         e2e_F = self.compute_e2e_fidleity(path_edges)
+
+        # Iterate over each edge in the path
         for edge in path_edges:
+            # Check if the edge is in the forbidden edges list
             if edge in self.forbidden_edges:
-                return False
-        return True
+                return False  # Return False if a forbidden edge is found
+
+        return True  # Return True if no forbidden edges are found in the path
+
     def compute_paths_between_pairs(self):
-        """computes the shortest number_of_paths paths between user pairs"""
-        path_counter = 0
-        for pair in self.user_pairs:
-            start_time = time.time()
-            k_paths_user_pair1  = self.get_paths_between_user_pairs(pair,self.number_of_paths)
-            k_paths_user_pair1.append([pair[0],pair[1]])
-            user_pair_path_ids = []
-            for path in k_paths_user_pair1:
-                node_indx = 0
-                path_edges = []
-                for node_indx in range(len(path)-1):                
-                    path_edges.append((path[node_indx],path[node_indx+1]))
-                    node_indx+=1
+        """Computes the shortest 'number_of_paths' paths between user pairs"""
+
+        path_counter = 0  # Initialize a counter for tracking the paths
+
+        for pair in self.user_pairs:  # Iterate over each pair of users
+            start_time = time.time()  # Record the start time for performance measurement
+
+            # Get the shortest paths between the user pair up to 'number_of_paths' paths
+            k_paths_user_pair1 = self.get_paths_between_user_pairs(pair, self.number_of_paths)
+
+            # Add a direct path between the pair if exists
+            k_paths_user_pair1.append([pair[0], pair[1]])
+
+            user_pair_path_ids = []  # Initialize a list to store path IDs for the current user pair
+
+            for path in k_paths_user_pair1:  # Iterate over each path
+                node_indx = 0  # Initialize the node index
+                path_edges = []  # Initialize a list to store edges of the path
+
+                # Iterate through the nodes in the path to create edges
+                for node_indx in range(len(path) - 1):
+                    path_edges.append((path[node_indx], path[node_indx + 1]))  # Add the edge to the path
+                    node_indx += 1
+
+                # Check if the generated path is valid
                 if self.check_a_valid_path(path_edges):
-#                     print("for user pair %s we are adding path %s "%(pair,path_edges))
+                    # If valid, add the path to the set of default paths
                     self.set_of_paths_default[path_counter] = path_edges
+
+                    # Append the path counter to the list of path IDs for the current user pair
                     user_pair_path_ids.append(path_counter)
-                    path_counter+=1
+
+                    path_counter += 1  # Increment the path counter
+
+            # Store the path IDs for the current user pair in the default paths dictionary
             self.each_user_pair_dafualt_paths[pair] = user_pair_path_ids
-            end_time = time.time()
-            duration = end_time-start_time
+
+            end_time = time.time()  # Record the end time for performance measurement
+            duration = end_time - start_time  # Calculate the duration for processing the current pair
+
     def get_paths_between_user_pairs(self,user_pair,cut_off_for_path_searching):
         return self.k_shortest_paths(user_pair[0], user_pair[1], cut_off_for_path_searching,"weight")
     def k_shortest_paths(self,source, target, k, weight):
@@ -166,94 +172,148 @@ class Network:
            
         )
 
-    
-    def compute_e2e_fidleity(self,path_edges):
-        """computing the end to end fidelity of a path"""
+    def compute_e2e_fidleity(self, path_edges):
+        """Computes the end-to-end fidelity of a path."""
+
+        # Check if path_edges is not empty
         if path_edges:
-            F_product = (4*self.edge_F-1)/3 
+            # Initial computation for the first edge
+            F_product = (4 * self.edge_F - 1) / 3
+
+            # Iterate over the remaining edges in the path
             for edge in path_edges[1:]:
-                F_product  = F_product*(((4*self.edge_F)-1)/3)
+                F_product *= ((4 * self.edge_F - 1) / 3)
         else:
-            print("Error")
+            # Print an error message and return default fidelity of 1.0 if path_edges is empty
+            print("Error: path_edges is empty")
             return 1.0
+
+        # Number of edges in the path
         N = len(path_edges)
+
+        # Placeholder values for p1 and p2 (assuming these could be parameters or calculations in the future)
         p1 = 1
         p2 = 1
-        F_final = (1/4)+(3/4)*((p1*(((4*(p2**2))-1)/3))**(N-1))*(F_product)
 
-        return round(F_final,3)
-    
+        # Compute the final fidelity
+        F_final = (1 / 4) + (3 / 4) * ((p1 * ((4 * (p2 ** 2) - 1) / 3)) ** (N - 1)) * F_product
 
-    def f(self,W,P,Q,i,k):
-        """computing the QCAST recursive function in Shi, Shouqian, and Chen Qian SIGCOM202 paper"""
-        if k==1:
+        # Return the final fidelity rounded to three decimal places
+        return round(F_final, 3)
+
+    def f(self, W, P, Q, i, k):
+        """
+        Computes the QCAST recursive function from the SIGCOMM 202 paper by Shi, Shouqian, and Chen Qian.
+
+        Parameters:
+        W (int): A parameter representing the maximum index for the recursion.
+        P (list): A parameter matrix used in the computation (unused in this function).
+        Q (list): A parameter matrix used in the computation.
+        i (int): The current index.
+        k (int): The current recursion depth.
+
+        Returns:
+        float: The result of the recursive computation.
+        """
+
+        if k == 1:
+            # Base case: if k is 1, return the value at Q[i][k]
             return Q[i][k]
         else:
             sum_Q = 0
-            for l in range(i,W+1):
-                sum_Q = sum_Q+Q[l][k]
-            sum_P = 0
-            for l in range(i+1,W+1):
-                sum_P = sum_P+self.f(W,P,Q,l,k-1)
-            return self.f(W,P,Q,i,k-1)* sum_Q+Q[i][k]* sum_P
+            # Compute the sum of Q[l][k] for l from i to W (inclusive)
+            for l in range(i, W + 1):
+                sum_Q += Q[l][k]
 
-    def compute_e2e_rate(self,path_id,path,W):
-        """using QCAST or approximate function to compute end to end rate on a path"""
-        if (self.relaxing_QCAST_formulation or W>=100):
+            sum_P = 0
+            # Compute the sum of the recursive function f(W, P, Q, l, k-1) for l from i+1 to W (inclusive)
+            for l in range(i + 1, W + 1):
+                sum_P += self.f(W, P, Q, l, k - 1)
+
+            # Combine the computed sums with recursive calls to f
+            return self.f(W, P, Q, i, k - 1) * sum_Q + Q[i][k] * sum_P
+
+    def compute_e2e_rate(self, path_id, path, W):
+        """
+        Computes the end-to-end rate on a path using QCAST or an approximate function.
+
+        Parameters:
+        path_id (int): Identifier for the path.
+        path (list): List of edges representing the path.
+        W (int): Parameter representing some factor (e.g., number of transmissions).
+
+        Returns:
+        float: The computed end-to-end rate on the path.
+        """
+
+        # Use approximate function if relaxing QCAST formulation or W >= 100
+        if self.relaxing_QCAST_formulation or W >= 100:
             p_values = []
+
+            # Iterate over each edge in the path
             for edge in path:
                 try:
+                    # Try to get the transmission value for the edge
                     p_value = self.transmission[edge]
                 except:
-                    distance = nx.shortest_path_length(self.G, source=edge[0], target=edge[1],weight = "weight")
-                    p_value =  10**(-0.2*distance/10)
+                    # If not available, compute based on the shortest path distance
+                    distance = nx.shortest_path_length(self.G, source=edge[0], target=edge[1], weight="weight")
+                    p_value = 10 ** (-0.2 * distance / 10)
                     self.transmission[edge] = p_value
                     self.weights[edge] = distance
                 p_values.append(p_value)
-            return W * min(p_values) * (self.q**(len(path)-1))
+
+            # Return the computed rate using the minimum p_value and the q parameter
+            return W * min(p_values) * (self.q ** (len(path) - 1))
         else:
-            scheme_key = str(W)+"-path"
-            h =len(path)
-            P={}
-            Q={}
+            scheme_key = str(W) + "-path"
+            h = len(path)
+            P = {}
+            Q = {}
             q_value = self.q
-            self.p={}
-            each_scheme_each_point_value = {}
+            self.p = {}
             edge_indx = 1
 
+            # Initialize transmission probabilities for each edge in the path
             for edge in path:
                 try:
                     p_value = self.transmission[edge]
                 except:
-                    distance = nx.shortest_path_length(self.G, source=edge[0], target=edge[1],weight = "weight")
-                    p_value =  10**(-0.2*distance/10)
+                    distance = nx.shortest_path_length(self.G, source=edge[0], target=edge[1], weight="weight")
+                    p_value = 10 ** (-0.2 * distance / 10)
                     self.transmission[edge] = p_value
                     self.weights[edge] = distance
-                self.p[edge_indx]=p_value
-                edge_indx+=1
-            for i in range(1,W+1):
-                for k in range(1,h+1):
-                    try:
-                        Q[i][k] =math.comb(W, i)*self.p[k]**i * (1-self.p[k])**(W-i)
-                    except:
-                        Q[i]={}
-                        Q[i][k] =math.comb(W, i)*self.p[k]**i * (1-self.p[k])**(W-i)
+                self.p[edge_indx] = p_value
+                edge_indx += 1
 
-                    if k==1:
+            # Compute Q values for the path
+            for i in range(1, W + 1):
+                for k in range(1, h + 1):
+                    try:
+                        Q[i][k] = math.comb(W, i) * self.p[k] ** i * (1 - self.p[k]) ** (W - i)
+                    except KeyError:
+                        Q[i] = {}
+                        Q[i][k] = math.comb(W, i) * self.p[k] ** i * (1 - self.p[k]) ** (W - i)
+
+                    if k == 1:
                         try:
                             P[i][1] = Q[i][1]
-                        except:
-                            P[i]={}
+                        except KeyError:
+                            P[i] = {}
                             P[i][1] = Q[i][1]
 
-            for i in range(1,W+1):
-                for k in range(1,h+1):
-                    value = self.f(W,P,Q,i,k)
+            # Use the recursive function to compute P values for the path
+            for i in range(1, W + 1):
+                for k in range(1, h + 1):
+                    value = self.f(W, P, Q, i, k)
                     P[i][k] = value
+
+            # Compute the final expected transmission rate
             sum_i = 0
-            for i in range(1,W+1):
-                sum_i = sum_i+(i * P[i][k])
-            EXT = q_value**(h-1) *sum_i
+            for i in range(1, W + 1):
+                sum_i += i * P[i][k]
+
+            EXT = q_value ** (h - 1) * sum_i
             return EXT
 
     def save_QCAST_equation_results(self,user_pair,edges,path_id,E_p,e2e_F,W,user_pair_weight):
@@ -501,38 +561,54 @@ class Network:
                                        self.lower_bound_distance_between_pairs,
                                        self.upper_bound_distance_between_pairs,
                                        self.max_dist])
-                
-                
-    def generate_repeater_chain(self,dist,number_of_repetaers):
+
+    def generate_repeater_chain(self, dist, number_of_repeaters):
+        """
+        Generates a repeater chain network graph with given distance and number of repeaters.
+
+        Parameters:
+        dist (float): The distance between each consecutive repeater.
+        number_of_repeaters (int): The number of repeaters to be placed in the chain.
+        """
+
+        # Initialize the graph, user pairs, repeater places, and other attributes
         self.G = nx.Graph()
         self.user_pairs = []
-        self.repeater_places=[]
+        self.repeater_places = []
         self.weights = {}
-        self.set_of_edges=[]
+        self.set_of_edges = []
         self.transmission = {}
-        self.each_pair_id_nodes ={}
-        self.each_edge_lenght={}
+        self.each_pair_id_nodes = {}
+        self.each_edge_length = {}
         self.pair_id = 0
         end_nodes = []
-        for i in range(number_of_repetaers+1):
+
+        # Add edges between repeaters and calculate transmission probabilities
+        for i in range(number_of_repeaters + 1):
             source = i
-            end = i+1
-            e = (source,end)
-            self.G.add_edge(source,end,weight=dist)
-            p = 10**(-0.2*dist/10)
-            self.weights[e] = dist
-            self.weights[(e[1],e[0])] = dist
-            self.transmission[e] = 10**(-0.2*dist/10)
-        self.pos = nx.spring_layout(self.G)
-        self.user_pairs.append((0,number_of_repetaers+1))
-        user_pair_nodes = [0,number_of_repetaers+1]
+            end = i + 1
+            e = (source, end)
+            self.G.add_edge(source, end, weight=dist)  # Add edge to the graph with given distance as weight
+            p = 10 ** (-0.2 * dist / 10)  # Calculate transmission probability
+            self.weights[e] = dist  # Store distance in weights dictionary
+            self.weights[(e[1], e[0])] = dist  # Store reverse edge distance
+            self.transmission[e] = p  # Store transmission probability in transmission dictionary
+
+        self.pos = nx.spring_layout(self.G)  # Compute spring layout for the graph
+        self.user_pairs.append((0, number_of_repeaters + 1))  # Add user pair from start to end of the chain
+        user_pair_nodes = [0, number_of_repeaters + 1]
+
+        # Identify repeater nodes (nodes that are not user pair nodes)
         for node in self.G.nodes:
             if node not in user_pair_nodes:
                 self.repeater_places.append(node)
-        self.N =len(self.G.nodes)
-        self.node_list = np.arange(self.N)
-        length = nx.shortest_path_length(self.G, source=0, target=number_of_repetaers+1,weight = "weight")
-        
+
+        self.N = len(self.G.nodes)  # Total number of nodes in the graph
+        self.node_list = np.arange(self.N)  # Create a list of node indices
+
+        # Compute the shortest path length between the first and last node
+        length = nx.shortest_path_length(self.G, source=0, target=number_of_repeaters + 1, weight="weight")
+
     def generate_dumbbell_shape_graph_with_n_repeater(self,distance,R):
         print("generating a dumble shape topology with %s user pairs and middle link %s divided by R repetaer %s "%(self.number_of_user_pairs,
                                                                                  distance,
@@ -1076,124 +1152,6 @@ class Network:
                     waiting_times.append(2*time_for_d2*1000000)# we get the waiting time per micro seconds
             self.each_path_repeater_required_decoherence_time[path_id] = max(waiting_times)
             self.each_path_end_node_required_decoherence_time[path_id] = sum(end_memory_waiting_times)
-
-       
-
-    
-    
-    
-    
-
-
-# In[2]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
 
 
 
