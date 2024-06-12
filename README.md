@@ -33,12 +33,15 @@ Make sure you have the IBM CPLEX academic edition installed, as the community ed
 
 * The ```config.py``` file includes the configuration and hyperparameters for the experiments. You can modify the hyperparamter values in this file to conduct various experiments with different network topologies, such as a repeater chain or SURFnet and ESnet.
 
+For any questions or issues, please open an issue on the GitHub repository or contact the authors via email.
+
+
 # Citing
 
 Please cite our paper if you're using any part of this code for your project.
 
 ```@inproceedings{pouryousef2023quantum,
-  title={Quantum Network Planning for Utility Maximization},
+title={Quantum Network Planning for Utility Maximization},
   author={Pouryousef, Shahrooz and Shapourian, Hassan and Shabani, Alireza and Towsley, Don},
   booktitle={Proceedings of the 1st Workshop on Quantum Networks and Distributed Quantum Computing},
   pages={13--18},
@@ -46,14 +49,11 @@ Please cite our paper if you're using any part of this code for your project.
 }```
 
 ```@inproceedings{pouryousef2023quantum,
-  title={Resource Allocation for Rate and Fidelity
-Maximization in Quantum Networks},
+  title={Resource Allocation for Rate and Fidelity Maximization in Quantum Networks},
   author={Pouryousef, Shahrooz and Shapourian, Hassan and Shabani, Alireza, Kompella, Ramana and Towsley, Don},
   journal={arXiv preprint arXiv:2308.16264v2},
   year={2024}
 }```
 
 
-
-For any questions or issues, please open an issue on the GitHub repository or contact the authors via email.
 
