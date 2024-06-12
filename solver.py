@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[6]:
-
-
 import numpy as np
 import random
 import csv
@@ -18,28 +15,6 @@ import matplotlib.pyplot as plt
 from config import get_config
 from absl import flags
 FLAGS = flags.FLAGS
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[1]:
-
 
 class Solver:
     def __init__(self):
