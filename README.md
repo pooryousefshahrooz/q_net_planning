@@ -70,9 +70,9 @@ Here we show how to run the repeater placement on a link for a dumbbell topology
     
 * repeaters and end nodes hyperparameters
   ```D_values= [10] # set of values for repeaters memory budget
-  checking_repeater_memory_life_time_flag = False # set to True of we want to restrict paths 
+  checking_repeater_memory_life_time_flag = False # set to True if you want to restrict paths 
   checking_end_node_memory_life_time_flag = False 
-  R_values = [10,4,6,8] # set of values for number of repetaers budget
+  R_values = [10,4,6,8] # set of values for the number of repeaters budget
   end_user_memory_set = [10] # the memory budget of end nodes```
   
 # Interpreting the Results
