@@ -1,5 +1,5 @@
 # Overview
-This repository contains the source code and supplementary materials for the paper https://arxiv.org/pdf/2308.16264v2, which explores methods for fault-tolerant distributed quantum computing through advanced network planning techniques.
+This repository contains the source code and supplementary materials for the paper https://arxiv.org/pdf/2308.16264v2, which explores resource allocation for quantum network planning.
 
 # Paper Details
 Title: Resource Allocation for Rate and Fidelity Maximization in Quantum Networks
@@ -11,31 +11,19 @@ Abstract: Existing classical optical network infrastructure cannot be immediatel
 # Requirements:
 To run the code in this repository, you need to have the following libraries installed on your machine:
 
-IBM CPLEX:
+*IBM CPLEX
 
-IBM CPLEX is an optimization solver for linear programming, mixed integer programming, and quadratic programming. You can download and install CPLEX from the IBM website.
-Ensure that you have a valid license for CPLEX. Free academic licenses are available for students and researchers.
-NetworkX:
-
-NetworkX is a Python package for the creation, manipulation, and study of complex networks.
+*NetworkX:
 You can install NetworkX using pip:
-pip install networkx
+```pip install networkx```
 
-Ensure that you have IBM CPLEX installed as per the instructions above.
+Make sure you have the IBM CPLEX academic edition installed, as the community edition may not support the problem size.
 
 # Usage
-Prepare your environment:
 
-Set up your IBM CPLEX environment variables as required.
-Ensure NetworkX is installed and can be imported in your Python environment.
-Run the scripts:
+* You can find various scripts in the root directory that correspond to different experiments and analyses described in the paper. The main.py is the main script. 
 
-You can find various scripts in the src directory that correspond to different experiments and analyses described in the paper.
-For example, to run the main quantum network planning script, use:
-
-# Configuration:
-
-config.py contains the parameters such as the topology, assumptions. You can modify these files to run different scenarios and network configurations.
+* The config.py file includes the configuration and hyperparameters for the experiments. You can adjust this file to conduct various experiments with different network topologies, such as a repeater chain or SURFnet and ESnet.
 
 For any questions or issues, please open an issue on the GitHub repository or contact the authors via email.
 
