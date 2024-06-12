@@ -20,7 +20,7 @@ To run the code in this repository, you need to have the following libraries ins
 * IBM CPLEX
 
 * NetworkX:
-* 
+  
 You can install NetworkX using pip:
 
 ```pip install networkx```
@@ -31,7 +31,7 @@ Make sure you have the IBM CPLEX academic edition installed, as the community ed
 
 * Various scripts corresponding to different experiments and analyses described in the paper are located in the root directory. The primary script is ```main.py```.
 
-* The ```config.py``` file includes the configuration and hyperparameters for the experiments. You can adjust this file to conduct various experiments with different network topologies, such as a repeater chain or SURFnet and ESnet.
+* The ```config.py``` file includes the configuration and hyperparameters for the experiments. You can modify the hyperparamter values in this file to conduct various experiments with different network topologies, such as a repeater chain or SURFnet and ESnet.
 
 For any questions or issues, please open an issue on the GitHub repository or contact the authors via email.
 
